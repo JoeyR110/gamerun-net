@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GameRun Leaderboard</title>
+
+  <!-- Minimal, safe styling just to align columns cleanly -->
+  <style>
+    :root {
+      color-scheme: dark;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 24px;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: #0a0a0a;
+      color: #eaeaea;
+    }
+    h1, h2 {
+      margin: 0 0 12px 0;
+      line-height: 1.2;
+    }
+    .subtle { color: #a0a0a0; font-size: 0.95rem; margin-bottom: 12px; }
+
+    /* Leaderboard table */
+    table.leaderboard {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      table-layout: fixed; /* keeps columns aligned even with long text */
+    }
+    table.leaderboard th,
+    table.leaderboard td {
+      padding: 8px 10px;
+      border-bottom: 1px solid #303030;
+      text-align: left;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    table.leaderboard th {
+      font-weight: 700;
+      background: #111;
+    }
+    /* Column widths for clean alignment on desktop; still responsive */
+    .col-rank     { width: 48px; }
+    .col-game     { width: 34%; }
+    .col-time     { width: 14%; }
+    .col-runner   { width: 20%; }
+    .col-platform { width: 18%; }
+    .col-date     { width: 14%; }
+
+    /* Small screens: allow wrapping on game column, keep others tight */
+    @media (max-width: 640px) {
+      table.leaderboard th,
+      table.leaderboard td { white-space: nowrap; }
+      .col-game { white-space: normal; }
+    }
+
+    .error {
+      padding: 12px 14px;
+      border: 1px solid #5b1b1b;
+      background: #1a0f0f;
+      color: #ffb3b3;
+      border-radius: 6px;
+      margin-top: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>GameRun</h1>
+  <div class="subtle">Glitchless. No load-time removal. One category per game.</div>
+
+  <h2>Leaderboards</h2>
+
+  <table class="leaderboard" aria-label="GameRun Leaderboard">
+    <thead>
+      <tr>
+        <th class="col-rank">#</th>
+        <th class="col-game">Game</th>
+        <th class="col-time">Time</th>
+        <th class="col-runner">Runner</th>
+        <th class="col-platform">Platform</th>
+        <th class="col-date">Date</th>
+      </tr>
+    </thead>
+    <tbody id="leaderboard-rows">
+      <!-- rows injected by JS -->
+    </tbody>
+  </table>
+
+  <div id="leaderboard-error" class="error" style="display:none;"></div>
+
+  <script>
+    // Format seconds as H:MM:SS or M:SS
+    function fmtTime(totalSeconds) {
+      if (!Number.isFinite(totalSeconds) || totalSeconds < 0) return "—";
+      totalSeconds = Math.floor(totalSeconds);
+      const h = Math.floor(totalSeconds / 3600);
+      const m = Math.floor((totalSeconds % 3600) / 60);
+      const s = totalSeconds % 60;
+
+      const SS = String(s).padStart(2, "0");
+      if (h > 0) {
+        const MM = String(m).padStart(2, "0");
+        return `${h}:${MM}:${SS}`;
+      }
+      return `${m}:${SS}`;
+    }
+
+    function showError(msg) {
+      const box = document.getElementById("leaderboard-error");
+      box.textContent = msg;
+      box.style.display = "block";
+    }
+
+    // Load leaderboard data from /data/leaderboard.json
+    // (Netlify serves files from your GitHub repo; your desktop path is not used.)
+    fetch("data/leaderboard.json", { cache: "no-store" })
+      .then(r => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.json();
+      })
+      .then(list => {
+        const tbody = document.getElementById("leaderboard-rows");
+        tbody.innerHTML = ""; // clear any previous
+        if (!Array.isArray(list) || list.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="6">No runs yet.</td></tr>`;
+          return;
+        }
+
+        list.forEach((e, i) => {
+          const tr = document.createElement("tr");
+          const game = e.game ?? "—";
+          const timeSeconds = Number(e.timeSeconds);
+          const time = fmtTime(timeSeconds);
+          const runner = e.runner ?? "—";
+          const platform = e.platform ?? "—";
+          const date = e.date ?? "—";
+
+          tr.innerHTML = `
+            <td class="col-rank">${i + 1}</td>
+            <td class="col-game" title="${game}">${game}</td>
+            <td class="col-time">${time}</td>
+            <td class="col-runner">${runner}</td>
+            <td class="col-platform">${platform}</td>
+            <td class="col-date">${date}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      })
+      .catch(err => {
+        console.error(err);
+        showError("Could not load leaderboard. Make sure data/leaderboard.json exists in your repo.");
+        const tbody = document.getElementById("leaderboard-rows");
+        tbody.innerHTML = `<tr><td colspan="6">—</td></tr>`;
+      });
+  </script>
+</body>
+</html>
