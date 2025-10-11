@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Submit Your GameRun</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* quick styles if you don't have style.css yet */
+    :root { font-family: system-ui, Arial, sans-serif; }
+    body { margin: 2rem; }
+    .wrap { max-width: 820px; margin: 0 auto; }
+    h1 { margin-bottom: 1rem; }
+    form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .9rem 1rem;
+      align-items: start;
+      background: #f8f8f8;
+      padding: 1.25rem;
+      border-radius: 10px;
+      border: 1px solid #e5e5e5;
+    }
+    label { font-weight: 600; }
+    input, textarea, select, button {
+      width: 100%;
+      padding: .6rem .7rem;
+      border: 1px solid #d8d8d8;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+    textarea { min-height: 120px; grid-column: 1 / -1; }
+    .full { grid-column: 1 / -1; }
+    .actions { display: flex; gap: .75rem; }
+    .btn {
+      cursor: pointer; border: none; padding: .75rem 1rem; border-radius: 8px;
+    }
+    .btn-primary { background: #111; color: #fff; }
+    .nav { margin: 1rem 0 2rem; }
+    .small { font-size: .9rem; color: #666; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="nav"><a href="index.html">← Back to Leaderboard</a></div>
+    <h1>Submit Your GameRun</h1>
+
+    <form name="gamerun-submission" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <!-- Required by Netlify -->
+      <input type="hidden" name="form-name" value="gamerun-submission" />
+      <p class="hidden" style="display:none;">
+        <label>Don’t fill this out if you’re human: <input name="bot-field" /></label>
+      </p>
+
+      <div>
+        <label for="player">Player Name</label>
+        <input id="player" name="player" required />
+      </div>
+
+      <div>
+        <label for="game">Game Title</label>
+        <input id="game" name="game" required />
+      </div>
+
+      <div>
+        <label for="time">Run Time (hh:mm:ss)</label>
+        <input id="time" name="time" inputmode="numeric" pattern="^\\d{1,2}:\\d{2}:\\d{2}$" placeholder="2:57:42" required />
+      </div>
+
+      <div>
+        <label for="video">Video Link (YouTube/Twitch)</label>
+        <input id="video" name="video" type="url" placeholder="https://…" required />
+      </div>
+
+      <div>
+        <label for="platform">Platform</label>
+        <input id="platform" name="platform" placeholder="Xbox Series X, PS5, PC…" />
+      </div>
+
+      <div>
+        <label for="category">Category</label>
+        <select id="category" name="category">
+          <option value="GameRun Any% (No Glitches)">GameRun Any% (No Glitches)</option>
+          <option value="GameRun 100% (No Glitches)">GameRun 100% (No Glitches)</option>
+          <option value="PlayThrough">PlayThrough</option>
+        </select>
+      </div>
+
+      <div class="full">
+        <label for="notes">Notes or Comments</label>
+        <textarea id="notes" name="notes" placeholder="Route notes, DLC used, difficulty, etc."></textarea>
+      </div>
+
+      <div class="full actions">
+        <button class="btn btn-primary" type="submit">Submit GameRun</button>
+        <span class="small">Submissions are reviewed before appearing on the leaderboard.</span>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
