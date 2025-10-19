@@ -1,38 +1,91 @@
-* { box-sizing: border-box; }
 :root {
-  --bg: #0b0f12;
-  --card: #11161b;
-  --ink: #e6f1ff;
-  --muted: #86a0b3;
-  --accent: #58a6ff;
-  --line: #1f2730;
+  color-scheme: dark;
 }
-html, body {
-  margin:0;
-  padding:0;
-  background:var(--bg);
-  color:var(--ink);
-  font:16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 24px;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  background: #0a0a0a;
+  color: #eaeaea;
 }
-a {
-  color: var(--accent);
+
+h1, h2 {
+  margin: 0 0 12px 0;
+  line-height: 1.2;
+}
+
+.subtle {
+  color: #a0a0a0;
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+}
+
+/* Leaderboard table */
+table.leaderboard {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  table-layout: fixed;
+}
+
+table.leaderboard th,
+table.leaderboard td {
+  padding: 8px 10px;
+  border-bottom: 1px solid #303030;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+table.leaderboard th {
+  font-weight: 700;
+  background: #111;
+}
+
+/* Column widths */
+.col-rank { width: 48px; }
+.col-game { width: 34%; }
+.col-time { width: 14%; }
+.col-runner { width: 20%; }
+.col-platform { width: 18%; }
+.col-date { width: 14%; }
+
+/* Small screens */
+@media (max-width: 640px) {
+  table.leaderboard th,
+  table.leaderboard td { white-space: nowrap; }
+  .col-game { white-space: normal; }
+}
+
+/* Error message */
+.error {
+  padding: 12px 14px;
+  border: 1px solid #5b1b1b;
+  background: #1a0f0f;
+  color: #ffb3b3;
+  border-radius: 6px;
+  margin-top: 12px;
+}
+
+/* Submit button */
+.btn-submit {
+  display: inline-block;
+  background: linear-gradient(90deg, #007aff, #00d4ff);
+  color: #fff;
+  padding: 0.8rem 1.6rem;
   text-decoration: none;
-}
-a:hover { text-decoration: underline; }
-
-.site-header, .site-footer {
-  background: linear-gradient(180deg, #0d1216, #0b0f12);
-  border-bottom: 1px solid var(--line);
-  padding: 20px;
-}
-.site-footer {
-  border-top: 1px solid var(--line);
-  border-bottom: 0;
-  text-align: center;
-  margin-top: 40px;
+  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  box-shadow: 0 0 10px rgba(0, 180, 255, 0.4);
+  transition: 0.2s ease-in-out;
 }
 
-h1 { margin: 0 0 4px; letter-spacing: 0.5px; }
-.tagline { margin: 0; color: var(--muted); }
-
-.top-nav { margin-top: 10px; display:flex; gap:16px;
+.btn-submit:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(0, 180, 255, 0.8);
+}

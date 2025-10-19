@@ -5,69 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>GameRun Leaderboard</title>
 
-  <!-- Minimal, safe styling just to align columns cleanly -->
-  <style>
-    :root {
-      color-scheme: dark;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      padding: 24px;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      background: #0a0a0a;
-      color: #eaeaea;
-    }
-    h1, h2 {
-      margin: 0 0 12px 0;
-      line-height: 1.2;
-    }
-    .subtle { color: #a0a0a0; font-size: 0.95rem; margin-bottom: 12px; }
-
-    /* Leaderboard table */
-    table.leaderboard {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 12px;
-      table-layout: fixed; /* keeps columns aligned even with long text */
-    }
-    table.leaderboard th,
-    table.leaderboard td {
-      padding: 8px 10px;
-      border-bottom: 1px solid #303030;
-      text-align: left;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    table.leaderboard th {
-      font-weight: 700;
-      background: #111;
-    }
-    /* Column widths for clean alignment on desktop; still responsive */
-    .col-rank     { width: 48px; }
-    .col-game     { width: 34%; }
-    .col-time     { width: 14%; }
-    .col-runner   { width: 20%; }
-    .col-platform { width: 18%; }
-    .col-date     { width: 14%; }
-
-    /* Small screens: allow wrapping on game column, keep others tight */
-    @media (max-width: 640px) {
-      table.leaderboard th,
-      table.leaderboard td { white-space: nowrap; }
-      .col-game { white-space: normal; }
-    }
-
-    .error {
-      padding: 12px 14px;
-      border: 1px solid #5b1b1b;
-      background: #1a0f0f;
-      color: #ffb3b3;
-      border-radius: 6px;
-      margin-top: 12px;
-    }
-  </style>
+  <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
 
@@ -75,6 +13,11 @@
   <div class="subtle">Glitchless. No load-time removal. One category per game.</div>
 
   <h2>Leaderboards</h2>
+
+  <!-- Submit button -->
+  <div style="text-align:center; margin: 1.5rem 0;">
+    <a href="submit.html" class="btn-submit">Submit Your GameRun</a>
+  </div>
 
   <table class="leaderboard" aria-label="GameRun Leaderboard">
     <thead>
@@ -102,7 +45,6 @@
       const h = Math.floor(totalSeconds / 3600);
       const m = Math.floor((totalSeconds % 3600) / 60);
       const s = totalSeconds % 60;
-
       const SS = String(s).padStart(2, "0");
       if (h > 0) {
         const MM = String(m).padStart(2, "0");
@@ -118,7 +60,6 @@
     }
 
     // Load leaderboard data from /data/leaderboard.json
-    // (Netlify serves files from your GitHub repo; your desktop path is not used.)
     fetch("data/leaderboard.json", { cache: "no-store" })
       .then(r => {
         if (!r.ok) throw new Error(`HTTP ${r.status}`);
@@ -126,7 +67,7 @@
       })
       .then(list => {
         const tbody = document.getElementById("leaderboard-rows");
-        tbody.innerHTML = ""; // clear any previous
+        tbody.innerHTML = "";
         if (!Array.isArray(list) || list.length === 0) {
           tbody.innerHTML = `<tr><td colspan="6">No runs yet.</td></tr>`;
           return;
