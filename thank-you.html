@@ -1,21 +1,53 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Thank You</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Thanks • GameRun</title>
+  <link rel="stylesheet" href="/assets/styles.css" />
   <style>
-    body { font-family: system-ui, Arial; text-align: center; margin-top: 10vh; }
-    h1 { color: #111; }
-    p { color: #555; }
-    a { display: inline-block; margin-top: 1rem; color: #0077ff; text-decoration: none; }
+    main { max-width: 900px; margin: 64px auto; padding: 0 16px; text-align: center; }
+    .card {
+      display: inline-block; padding: 32px 28px; border-radius: 10px;
+      background: var(--card, #11161b); border: 1px solid var(--line, #273a5b);
+      box-shadow: 0 0 20px rgba(90,160,255,.15);
+    }
+    .check { font-size: 42px; line-height: 1; margin-bottom: 12px; }
+    .muted { color: var(--muted, #86a0b3); margin: 8px 0 20px; }
+    .btn { display:inline-block; padding:.7rem 1.2rem; border-radius:6px; text-decoration:none;
+           background: var(--accent, #5aa0ff); color:#fff; font-weight:700; }
+    .btn:hover { filter: brightness(1.1); box-shadow: 0 0 14px var(--accent, #5aa0ff); }
+    .small { margin-top:12px; font-size:.95rem; color: var(--muted, #86a0b3); }
   </style>
 </head>
 <body>
-  <h1>✅ GameRun Submitted!</h1>
-  <p>Your submission has been received and will appear on the leaderboard after review.</p>
-  <a href="index.html">← Back to Leaderboard</a>
+  <main>
+    <div class="card">
+      <div class="check">✅</div>
+      <h1>GameRun Submitted!</h1>
+      <p class="muted">Your submission has been received and will appear on the leaderboard after review.</p>
+      <a class="btn" href="/index.html">← Back to Leaderboard</a>
+      <div class="small">Auto-redirecting in <span id="t">3</span>s…</div>
+    </div>
+  </main>
+
+ <script>
+  // 3-second auto-redirect back to the leaderboard
+  let n = 3;
+  const el = document.getElementById('t');
+
+  function tick() {
+    n--;
+    el.textContent = n;
+    if (n === 0) {
+      location.href = '/index.html';
+    } else {
+      setTimeout(tick, 1000);
+    }
+  }
+
+  setTimeout(tick, 1000);
+</script>
+
 </body>
 </html>
-
-<!-- keep: deploy touch -->
