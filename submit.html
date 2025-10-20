@@ -35,20 +35,17 @@
     <h1>Submit Your GameRun</h1>
     <p class="note">GameRun = full-game, glitchless integrity. Provide enough detail for quick verification.</p>
 
-    <!-- Netlify form -->
     <form name="gamerun-submission"
           method="POST"
           data-netlify="true"
           netlify-honeypot="bot-field"
-          action="/thanks/">
+          action="/thanks/index.html">
       <input type="hidden" name="form-name" value="gamerun-submission" />
 
-      <!-- Honeypot -->
       <div style="position:absolute; left:-10000px; top:auto; width:1px; height:1px; overflow:hidden;">
         <label>Don’t fill this out: <input name="bot-field" /></label>
       </div>
 
-      <!-- Runner & Game -->
       <div class="row">
         <div class="field">
           <label for="runner">Runner</label>
@@ -60,7 +57,6 @@
         </div>
       </div>
 
-      <!-- Platform & Date -->
       <div class="row">
         <div class="field">
           <label for="platform">Platform</label>
@@ -72,7 +68,6 @@
         </div>
       </div>
 
-      <!-- Category & Time -->
       <div class="row">
         <div class="field">
           <label for="category">Category</label>
@@ -84,7 +79,6 @@
         </div>
       </div>
 
-      <!-- Media & Notes -->
       <div class="row">
         <div class="field">
           <label for="video">Video URL</label>

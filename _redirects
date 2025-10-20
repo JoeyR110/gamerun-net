@@ -1,13 +1,14 @@
-# Serve real files / aliases
-/submit.html        /submit.html        200
-/thanks             /thanks/            200
-/thankyou           /thanks/            301
-/thankyou.html      /thanks/            301
-/thank-you          /thanks/            301
-/thank-you.html     /thanks/            301
+# Serve real files directly
+/submit.html           /submit.html           200
+/thanks                /thanks/index.html     200
+/thanks/               /thanks/index.html     200
+/thankyou.html         /thanks/index.html     301
+/thank-you.html        /thanks/index.html     301
+/thankyou              /thanks/index.html     301
+/thank-you             /thanks/index.html     301
 
-/assets/*           /assets/:splat      200
-/data/*             /data/:splat        200
+/assets/*              /assets/:splat         200
+/data/*                /data/:splat           200
 
-# SPA fallback for anything else
-/*                  /index.html         200
+# SPA fallback
+/*                     /index.html            200
