@@ -12,34 +12,22 @@
     h1 { margin: 0 0 1rem; }
     .note { margin: 0 0 1rem; color: #8a8a8a; }
 
-    /* card */
-    form {
-      background: var(--card, #111);
-      border: 1px solid #333;
-      border-radius: 12px;
-      padding: 1.25rem;
+    form { background: var(--card,#111); border:1px solid #333; border-radius:12px; padding:1.25rem; }
+    .row { display:grid; grid-template-columns:1fr; gap:1rem; margin-bottom:1rem; }
+    @media (min-width:720px){ .row { grid-template-columns:1fr 1fr; } }
+    .field { display:flex; flex-direction:column; gap:.4rem; }
+    label { font-weight:600; }
+    input, textarea {
+      padding:.65rem .75rem; border:1px solid #3a3a3a; border-radius:10px;
+      background:var(--bg,#0a0a0a); color:var(--text,#eee);
     }
-
-    /* rows: single column on mobile, 2-col on >=720px */
-    .row { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-bottom: 1rem; }
-    @media (min-width: 720px) { .row { grid-template-columns: 1fr 1fr; } }
-
-    .field { display: flex; flex-direction: column; gap: .4rem; }
-    label { font-weight: 600; }
-    input, select, textarea {
-      padding: .65rem .75rem; border: 1px solid #3a3a3a; border-radius: 10px;
-      background: var(--bg, #0a0a0a); color: var(--text, #eee);
-    }
-    textarea { min-height: 120px; resize: vertical; }
-
-    .section-title { margin: .25rem 0 .25rem; font-size: .95rem; color: #9aa0a6; letter-spacing: .02em; }
-
-    .actions { display: flex; gap: .75rem; margin-top: .5rem; }
+    textarea { min-height:120px; resize:vertical; }
+    .actions { display:flex; gap:.75rem; }
     button {
-      padding: .75rem 1.1rem; border: 0; border-radius: 10px; cursor: pointer;
-      background: #0070ff; color: #fff; font-weight: 700;
+      padding:.75rem 1.1rem; border:0; border-radius:10px; cursor:pointer;
+      background:#0070ff; color:#fff; font-weight:700;
     }
-    button[type="reset"] { background: #2d2d2d; }
+    button[type="reset"]{ background:#2d2d2d; }
   </style>
 </head>
 <body>
@@ -48,7 +36,11 @@
     <p class="note">GameRun = full-game, glitchless integrity. Provide enough detail for quick verification.</p>
 
     <!-- Netlify form -->
-    <form name="gamerun-submission" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thankyou.html">
+    <form name="gamerun-submission"
+          method="POST"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+          action="/thanks/">
       <input type="hidden" name="form-name" value="gamerun-submission" />
 
       <!-- Honeypot -->
@@ -57,24 +49,22 @@
       </div>
 
       <!-- Runner & Game -->
-      <div class="section-title">Runner & Game</div>
       <div class="row">
         <div class="field">
           <label for="runner">Runner</label>
-          <input id="runner" name="runner" type="text" autocomplete="name" required />
+          <input id="runner" name="runner" required />
         </div>
         <div class="field">
           <label for="game">Game</label>
-          <input id="game" name="game" type="text" required />
+          <input id="game" name="game" required />
         </div>
       </div>
 
       <!-- Platform & Date -->
-      <div class="section-title">Platform & Date</div>
       <div class="row">
         <div class="field">
           <label for="platform">Platform</label>
-          <input id="platform" name="platform" type="text" placeholder="Xbox Series X, PS5, PC…" required />
+          <input id="platform" name="platform" placeholder="Xbox Series X, PS5, PC…" required />
         </div>
         <div class="field">
           <label for="date">Date</label>
@@ -82,25 +72,23 @@
         </div>
       </div>
 
-      <!-- Category & Verified Time -->
-      <div class="section-title">Category & Time</div>
+      <!-- Category & Time -->
       <div class="row">
         <div class="field">
           <label for="category">Category</label>
-          <input id="category" name="category" type="text" placeholder="GameRun (glitchless full-game)"/>
+          <input id="category" name="category" placeholder="GameRun (glitchless full-game)" />
         </div>
         <div class="field">
           <label for="time">Verified Time (HH:MM:SS)</label>
-          <input id="time" name="verified_time" type="text" inputmode="numeric" placeholder="01:34:12" pattern="^\d{1,2}:\d{2}:\d{2}$" required />
+          <input id="time" name="verified_time" inputmode="numeric" pattern="^\d{1,2}:\d{2}:\d{2}$" placeholder="01:34:12" required />
         </div>
       </div>
 
-      <!-- Video & Notes -->
-      <div class="section-title">Media & Notes</div>
+      <!-- Media & Notes -->
       <div class="row">
         <div class="field">
           <label for="video">Video URL</label>
-          <input id="video" name="video_url" type="url" placeholder="https://www.youtube.com/watch?v=…" required />
+          <input id="video" name="video_url" type="url" placeholder="https://…" required />
         </div>
         <div class="field">
           <label for="proof">Additional Proof (optional)</label>
@@ -110,7 +98,7 @@
 
       <div class="field">
         <label for="notes">Notes to Verifier (optional)</label>
-        <textarea id="notes" name="notes" placeholder="Route details, rules followed, notable moments…"></textarea>
+        <textarea id="notes" name="notes"></textarea>
       </div>
 
       <div class="actions">
