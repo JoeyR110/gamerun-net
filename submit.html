@@ -1,75 +1,48 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Submit Your GameRun</title>
-
-  <!-- Use your site theme -->
   <link rel="stylesheet" href="/assets/styles.css" />
-  <link rel="icon" href="/assets/favicon.ico" />
+  <style>
+    :root { font-family: system-ui, Arial, sans-serif; color-scheme: light dark; }
+    body { margin: 2rem; }
+    .wrap { max-width: 880px; margin: 0 auto; }
+    h1 { margin: 0 0 1rem; }
+    .note { margin: 0 0 1rem; color: #8a8a8a; }
+
+    /* card */
+    form {
+      background: var(--card, #111);
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+
+    /* rows: single column on mobile, 2-col on >=720px */
+    .row { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-bottom: 1rem; }
+    @media (min-width: 720px) { .row { grid-template-columns: 1fr 1fr; } }
+
+    .field { display: flex; flex-direction: column; gap: .4rem; }
+    label { font-weight: 600; }
+    input, select, textarea {
+      padding: .65rem .75rem; border: 1px solid #3a3a3a; border-radius: 10px;
+      background: var(--bg, #0a0a0a); color: var(--text, #eee);
+    }
+    textarea { min-height: 120px; resize: vertical; }
+
+    .section-title { margin: .25rem 0 .25rem; font-size: .95rem; color: #9aa0a6; letter-spacing: .02em; }
+
+    .actions { display: flex; gap: .75rem; margin-top: .5rem; }
+    button {
+      padding: .75rem 1.1rem; border: 0; border-radius: 10px; cursor: pointer;
+      background: #0070ff; color: #fff; font-weight: 700;
+    }
+    button[type="reset"] { background: #2d2d2d; }
+  </style>
 </head>
 <body>
-  <main class="wrap" style="max-width:900px;margin:48px auto;padding:0 16px;">
-    <div class="nav"><a href="/index.html">← Back to Leaderboard</a></div>
+  <div class="wrap">
     <h1>Submit Your GameRun</h1>
-    <p class="tagline">Glitchless. No load-time removal. One category per game. Provide video proof.</p>
-
-    <!-- Netlify form -->
-    <form name="gamerun-submission"
-          method="POST"
-          data-netlify="true"
-          netlify-honeypot="bot-field"
-          action="/thank-you">
-
-      <!-- Required hidden name for Netlify -->
-      <input type="hidden" name="form-name" value="gamerun-submission" />
-
-      <!-- Spam honeypot -->
-      <p hidden>
-        <label>Don’t fill this out: <input name="bot-field" /></label>
-      </p>
-
-      <label for="player">Player Name</label>
-      <input id="player" name="Player" required autocomplete="name" />
-
-      <label for="game">Game Title</label>
-      <input id="game" name="Game" required />
-
-      <label for="time">Run Time (HH:MM:SS or MM:SS[.ms])</label>
-      <input id="time" name="Time" placeholder="00:58:42.3" required />
-
-      <label for="platform">Platform</label>
-      <input id="platform" name="Platform" placeholder="Xbox Series X" required />
-
-      <label for="date">Date</label>
-      <input id="date" name="Date" type="date" required />
-
-      <label for="video">Video URL (proof)</label>
-      <input id="video" name="Video URL" type="url" placeholder="https://youtu.be/..." />
-
-      <label for="notes">Notes (optional)</label>
-      <textarea id="notes" name="Notes" rows="4" placeholder="Category or verification notes…"></textarea>
-
-      <button type="submit">Submit Run</button>
-    </form>
-  </main>
-
-  <!-- Optional: tiny client-side validator for time format -->
-  <script>
-    (function () {
-      const f = document.forms['gamerun-submission'];
-      if (!f) return;
-      f.addEventListener('submit', function (e) {
-        const t = (f['Time']?.value || '').trim();
-        // Accept HH:MM:SS(.ms) or MM:SS(.ms)
-        const ok = /^(\d{1,2}:)?\d{2}:\d{2}(\.\d{1,3})?$/.test(t);
-        if (!ok) {
-          e.preventDefault();
-          alert('Use HH:MM:SS or MM:SS (optional .ms). Example: 00:58:42.3');
-        }
-      });
-    })();
-  </script>
-</body>
-</html>
+    <p class="note">Gam
