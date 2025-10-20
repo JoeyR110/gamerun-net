@@ -45,4 +45,79 @@
 <body>
   <div class="wrap">
     <h1>Submit Your GameRun</h1>
-    <p class="note">Gam
+    <p class="note">GameRun = full-game, glitchless integrity. Provide enough detail for quick verification.</p>
+
+    <!-- Netlify form -->
+    <form name="gamerun-submission" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thankyou.html">
+      <input type="hidden" name="form-name" value="gamerun-submission" />
+
+      <!-- Honeypot -->
+      <div style="position:absolute; left:-10000px; top:auto; width:1px; height:1px; overflow:hidden;">
+        <label>Don’t fill this out: <input name="bot-field" /></label>
+      </div>
+
+      <!-- Runner & Game -->
+      <div class="section-title">Runner & Game</div>
+      <div class="row">
+        <div class="field">
+          <label for="runner">Runner</label>
+          <input id="runner" name="runner" type="text" autocomplete="name" required />
+        </div>
+        <div class="field">
+          <label for="game">Game</label>
+          <input id="game" name="game" type="text" required />
+        </div>
+      </div>
+
+      <!-- Platform & Date -->
+      <div class="section-title">Platform & Date</div>
+      <div class="row">
+        <div class="field">
+          <label for="platform">Platform</label>
+          <input id="platform" name="platform" type="text" placeholder="Xbox Series X, PS5, PC…" required />
+        </div>
+        <div class="field">
+          <label for="date">Date</label>
+          <input id="date" name="date" type="date" required />
+        </div>
+      </div>
+
+      <!-- Category & Verified Time -->
+      <div class="section-title">Category & Time</div>
+      <div class="row">
+        <div class="field">
+          <label for="category">Category</label>
+          <input id="category" name="category" type="text" placeholder="GameRun (glitchless full-game)"/>
+        </div>
+        <div class="field">
+          <label for="time">Verified Time (HH:MM:SS)</label>
+          <input id="time" name="verified_time" type="text" inputmode="numeric" placeholder="01:34:12" pattern="^\d{1,2}:\d{2}:\d{2}$" required />
+        </div>
+      </div>
+
+      <!-- Video & Notes -->
+      <div class="section-title">Media & Notes</div>
+      <div class="row">
+        <div class="field">
+          <label for="video">Video URL</label>
+          <input id="video" name="video_url" type="url" placeholder="https://www.youtube.com/watch?v=…" required />
+        </div>
+        <div class="field">
+          <label for="proof">Additional Proof (optional)</label>
+          <input id="proof" name="additional_proof" type="url" placeholder="Splits, secondary VOD, etc." />
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="notes">Notes to Verifier (optional)</label>
+        <textarea id="notes" name="notes" placeholder="Route details, rules followed, notable moments…"></textarea>
+      </div>
+
+      <div class="actions">
+        <button type="submit">Submit Run</button>
+        <button type="reset">Reset</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
