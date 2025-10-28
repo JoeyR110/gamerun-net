@@ -3,23 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Thank You • GameRun</title>
-  <link rel="stylesheet" href="/assets/styles.css" />
+  <title>Thanks! Your GameRun Was Submitted</title>
+  <meta http-equiv="refresh" content="3; url=/" />
   <style>
-    :root { font-family: system-ui, Arial, sans-serif; color-scheme: light dark; }
-    body { margin: 2rem; display:grid; place-items:center; min-height:80dvh; }
-    .card { max-width:680px; background:var(--card,#111); border:1px solid #333; border-radius:14px; padding:1.5rem; text-align:center; }
-    a.button { display:inline-block; margin-top:1rem; padding:.8rem 1rem; border-radius:10px; border:1px solid #2b2b2b; background:#1a1a1a; color:#fff; text-decoration:none; }
-    a.button:hover { background:#232323; }
-    p { color:#bdbdbd; }
+    :root { color-scheme: dark; font-family: system-ui, Arial, sans-serif; }
+    body { margin: 0; min-height: 100dvh; display: grid; place-items: center; background:#111; color:#eee; }
+    .card { background:#181818; border:1px solid #333; border-radius:14px; padding:24px 28px; max-width:720px; text-align:center; }
+    h1 { margin: 0 0 .5rem; }
+    p { margin:.25rem 0; color:#cfcfcf; }
+    .accent { color:#ff6400; font-weight:700; }
+    a.btn { display:inline-block; margin-top:1rem; padding:.7rem 1.1rem; border-radius:8px; background:#ff6400; color:#fff; text-decoration:none; font-weight:700; }
+    a.btn:hover { background:#ff751a; }
+    .small { margin-top:.5rem; color:#8a8a8a; font-size:.95rem; }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>Thanks for your submission!</h1>
-    <p>We received your run. After a quick rules check, approved runs appear on the Leaderboards.</p>
-    <a class="button" href="/">Return Home</a>
-    <a class="button" href="/leaderboards.html" style="margin-left:.5rem;">View Leaderboards</a>
-  </div>
+  <main class="card">
+    <h1>✅ Thanks! Submission received.</h1>
+    <p>Your GameRun has been sent to the leaderboard queue.</p>
+    <p class="small">You’ll be redirected to the <span class="accent">home page</span> in a few seconds.</p>
+    <a class="btn" href="/">Go now</a>
+  </main>
+
+  <script>
+    // JS fallback if meta refresh is blocked
+    setTimeout(() => { location.href = "/"; }, 3000);
+  </script>
 </body>
 </html>
