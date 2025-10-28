@@ -2,65 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thanks – GameRun</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Thank You • GameRun</title>
   <link rel="stylesheet" href="/assets/styles.css" />
   <style>
-    :root {
-      font-family: system-ui, Arial, sans-serif;
-      color-scheme: light dark;
-    }
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
-      background: var(--bg, #0a0a0a);
-      color: var(--text, #eee);
-    }
-    .card {
-      text-align: center;
-      background: var(--card, #111);
-      border: 1px solid #333;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 0 25px rgba(0,0,0,0.6);
-      max-width: 500px;
-    }
-    h1 {
-      font-size: 1.6rem;
-      margin-bottom: 0.5rem;
-    }
-    p {
-      margin: 0.4rem 0 1rem;
-    }
-    .btn {
-      display: inline-block;
-      margin-top: 1rem;
-      padding: 0.7rem 1.2rem;
-      border-radius: 8px;
-      background: #0070ff;
-      color: white;
-      font-weight: 600;
-      text-decoration: none;
-      transition: background 0.2s ease;
-    }
-    .btn:hover { background: #005fd1; }
-    small {
-      display: block;
-      margin-top: 1rem;
-      color: #888;
-      font-size: 0.85rem;
-    }
+    :root { font-family: system-ui, Arial, sans-serif; color-scheme: light dark; }
+    body { margin: 2rem; display:grid; place-items:center; min-height:80dvh; }
+    .card { max-width:680px; background:var(--card,#111); border:1px solid #333; border-radius:14px; padding:1.5rem; text-align:center; }
+    a.button { display:inline-block; margin-top:1rem; padding:.8rem 1rem; border-radius:10px; border:1px solid #2b2b2b; background:#1a1a1a; color:#fff; text-decoration:none; }
+    a.button:hover { background:#232323; }
+    p { color:#bdbdbd; }
   </style>
 </head>
 <body>
   <div class="card">
-    <h1>✅ Submission Received!</h1>
-    <p>Your GameRun has been submitted and will appear on the leaderboard after review.</p>
-    <a href="/index.html" class="btn">Back to Leaderboard</a>
-    <small>You can safely close this tab or return anytime.</small>
+    <h1>Thanks for your submission!</h1>
+    <p>We received your run. After a quick rules check, approved runs appear on the Leaderboards.</p>
+    <a class="button" href="/">Return Home</a>
+    <a class="button" href="/leaderboards.html" style="margin-left:.5rem;">View Leaderboards</a>
   </div>
 </body>
 </html>

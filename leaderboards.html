@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Leaderboards • GameRun</title>
+  <link rel="stylesheet" href="/assets/styles.css" />
+  <style>
+    :root { font-family: system-ui, Arial, sans-serif; color-scheme: light dark; }
+    body { margin: 2rem; }
+    .wrap { max-width: 1100px; margin: 0 auto; }
+    .controls { display:flex; gap:.75rem; flex-wrap:wrap; margin: 0 0 1rem; }
+    select, input { padding:.6rem .7rem; border-radius:10px; border:1px solid #2c2c2c; background:#0b0b0b; color:#eaeaea; }
+    table { width:100%; border-collapse: collapse; margin: 1rem 0; }
+    th, td { border-bottom:1px solid #2b2b2b; padding:.65rem .5rem; text-align:left; }
+    th { font-weight:700; }
+    .game-header { margin-top:2rem; font-size:1.25rem; }
+    .note { color:#9a9a9a; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Leaderboards</h1>
+  <p class="note">Approved, glitchless, whole-game runs. Sorted by fastest time.</p>
+
+  <div class="controls">
+    <input id="search" placeholder="Search game or player…" />
+    <select id="categoryFilter">
+      <option value="">All Categories</option>
+      <option>Any% (Glitchless)</option>
+      <option>100% (Glitchless)</option>
+      <option>No Major Skips</option>
+      <option>New Game (Glitchless)</option>
+      <option>New Game+ (Glitchless)</option>
+    </select>
+    <select id="platformFilter">
+      <option value="">All Platforms</option>
+      <option>Xbox Series X|S</option><option>Xbox One</option>
+      <option>PlayStation 5</option><option>PlayStation 4</option>
+      <option>PC</option><option>Nintendo Switch</option><option>Other</option>
+    </select>
+  </div>
+
+  <div id="boards"></div>
+</div>
+
+<script>
+(async function() {
+  const res = await fetch('/data/leaderboard.json', { cache: 'no-store' });
+  const runs = await res.json(); // array of approved runs
+  const boards = document.getElementById('boards');
+  const search = document.getElementById('search');
+  const cat = document.getElementById('categoryFilter');
+  const plat = document.getElementById('platformFilter');
+
+  function toSeconds(hms) {
+    const parts = hms.trim().split(':').map(Number);
+    if (parts.length === 2) return parts[0]*60 + parts[1];
+    if (parts.length === 3) return parts[0]*3600 + parts[1]*60 + parts[2];
+    return Number.POSITIVE_INFINITY;
+  }
+  function fmt(s) {
+    s = Math.max(0, s|0);
+    const h = Math.floor(s/3600), m = Math.floor((s%3600)/60), sec = s%60;
+    return (h>0? h+':' : '') + String(m).padStart(2,'0') + ':' + String(sec).padStart(2,'0');
+  }
+
+  function render() {
+    const q = search.value.toLowerCase();
+    const filtered = runs.filter(r =>
+      (!cat.value || r.category === cat.value) &&
+      (!plat.value || r.platform === plat.value) &&
+      (!q || (r.game.toLowerCase().includes(q) || r.player.toLowerCase().includes(q)))
+    );
+
+    // group by game + category
+    const groups = {};
+    for (const r of filtered) {
+      const key = `${r.game} :: ${r.category}`;
+      (groups[key] ||= []).push(r);
+    }
+
+    // build DOM
+    boards.innerHTML = '';
+    const keys = Object.keys(groups).sort((a,b)=> a.localeCompare(b));
+    for (const key of keys) {
+      const [game, category] = key.split(' :: ');
+      const list = groups[key].slice().sort((a,b)=> toSeconds(a.runtime) - toSeconds(b.runtime));
+
+      const h = document.createElement('div');
+      h.className = 'game-header';
+      h.textContent = `${game} — ${category}`;
+      boards.appendChild(h);
+
+      const table = document.createElement('table');
+      table.innerHTML = `
+        <thead>
+          <tr>
+            <th>#</th><th>Player</th><th>Runtime</th><th>Platform</th><th>Date</th><th>Video</th>
+          </tr>
+        </thead>
+        <tbody></tbody>`;
+      const tb = table.querySelector('tbody');
+
+      list.forEach((r, i) => {
+        const tr = document.createElement('tr');
+        const idx = i+1;
+        tr.innerHTML = `
+          <td>${idx}</td>
+          <td>${r.player}</td>
+          <td>${r.runtime}</td>
+          <td>${r.platform}</td>
+          <td>${r.date ?? ''}</td>
+          <td><a href="${r.video}" target="_blank" rel="noopener">Watch</a></td>`;
+        tb.appendChild(tr);
+      });
+
+      boards.appendChild(table);
+    }
+
+    if (!keys.length) {
+      boards.innerHTML = `<p class="note">No runs match your filters yet.</p>`;
+    }
+  }
+
+  search.addEventListener('input', render);
+  cat.addEventListener('change', render);
+  plat.addEventListener('change', render);
+  render();
+})();
+</script>
+</body>
+</html>

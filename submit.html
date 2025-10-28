@@ -8,98 +8,100 @@
   <style>
     :root { font-family: system-ui, Arial, sans-serif; color-scheme: light dark; }
     body { margin: 2rem; }
-    .wrap { max-width: 880px; margin: 0 auto; }
-    h1 { margin: 0 0 1rem; }
-    .note { margin: 0 0 1rem; color: #8a8a8a; }
-
-    form { background: var(--card,#111); border:1px solid #333; border-radius:12px; padding:1.25rem; }
-    .row { display:grid; grid-template-columns:1fr; gap:1rem; margin-bottom:1rem; }
-    @media (min-width:720px){ .row { grid-template-columns:1fr 1fr; } }
-    .field { display:flex; flex-direction:column; gap:.4rem; }
-    label { font-weight:600; }
-    input, textarea {
-      padding:.65rem .75rem; border:1px solid #3a3a3a; border-radius:10px;
-      background:var(--bg,#0a0a0a); color:var(--text,#eee);
+    .wrap { max-width: 920px; margin: 0 auto; }
+    form { background: var(--card, #111); border:1px solid #333; border-radius:12px; padding:1.25rem; }
+    .row { display:grid; grid-template-columns:1fr; gap:.75rem; margin-bottom:1rem; }
+    label { font-weight:600; font-size:.95rem; }
+    input, select, textarea {
+      width:100%; padding:.75rem; border-radius:10px; border:1px solid #2c2c2c; background:#0b0b0b; color:#eaeaea;
     }
-    textarea { min-height:120px; resize:vertical; }
-    .actions { display:flex; gap:.75rem; }
-    button {
-      padding:.75rem 1.1rem; border:0; border-radius:10px; cursor:pointer;
-      background:#0070ff; color:#fff; font-weight:700;
-    }
-    button[type="reset"]{ background:#2d2d2d; }
+    .hint { color:#9a9a9a; font-size:.85rem; }
+    .actions { display:flex; gap:.75rem; align-items:center; }
+    button { padding:.8rem 1rem; border-radius:10px; border:1px solid #2b2b2b; background:#1a1a1a; color:#fff; cursor:pointer; }
+    button:hover { background:#232323; }
+    .note { color:#9a9a9a; margin-bottom:1rem; }
+    .visually-hidden { position:absolute; left:-9999px; }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <h1>Submit Your GameRun</h1>
-    <p class="note">GameRun = full-game, glitchless integrity. Provide enough detail for quick verification.</p>
+<div class="wrap">
+  <h1>Submit Your GameRun</h1>
+  <p class="note">Glitchless • Whole-game (start menu → end credits) • No load-time removal.</p>
 
-    <form name="gamerun-submission"
-          method="POST"
-          data-netlify="true"
-          netlify-honeypot="bot-field"
-          action="/thanks/index.html">
-      <input type="hidden" name="form-name" value="gamerun-submission" />
+  <!-- Netlify Forms -->
+  <form name="gamerun-submission" method="POST" data-netlify="true" netlify-honeypot="honeypot" action="/thankyou.html">
+    <input type="hidden" name="form-name" value="gamerun-submission" />
+    <p class="visually-hidden">
+      <label>Don’t fill this out: <input name="honeypot" /></label>
+    </p>
 
-      <div style="position:absolute; left:-10000px; top:auto; width:1px; height:1px; overflow:hidden;">
-        <label>Don’t fill this out: <input name="bot-field" /></label>
-      </div>
+    <div class="row">
+      <label for="game">Game Title</label>
+      <input id="game" name="game" placeholder="Grayhill Incident" required />
+    </div>
 
-      <div class="row">
-        <div class="field">
-          <label for="runner">Runner</label>
-          <input id="runner" name="runner" required />
-        </div>
-        <div class="field">
-          <label for="game">Game</label>
-          <input id="game" name="game" required />
-        </div>
-      </div>
+    <div class="row">
+      <label for="platform">Platform</label>
+      <select id="platform" name="platform" required>
+        <option value="" disabled selected>Select platform</option>
+        <option>Xbox Series X|S</option>
+        <option>Xbox One</option>
+        <option>PlayStation 5</option>
+        <option>PlayStation 4</option>
+        <option>PC</option>
+        <option>Nintendo Switch</option>
+        <option>Other</option>
+      </select>
+    </div>
 
-      <div class="row">
-        <div class="field">
-          <label for="platform">Platform</label>
-          <input id="platform" name="platform" placeholder="Xbox Series X, PS5, PC…" required />
-        </div>
-        <div class="field">
-          <label for="date">Date</label>
-          <input id="date" name="date" type="date" required />
-        </div>
-      </div>
+    <div class="row">
+      <label for="category">Category</label>
+      <select id="category" name="category" required>
+        <option value="" disabled selected>Select category</option>
+        <option>Any% (Glitchless)</option>
+        <option>100% (Glitchless)</option>
+        <option>No Major Skips</option>
+        <option>New Game (Glitchless)</option>
+        <option>New Game+ (Glitchless)</option>
+      </select>
+      <div class="hint">GameRun rules: whole-game, no exploits, no load-time removal.</div>
+    </div>
 
-      <div class="row">
-        <div class="field">
-          <label for="category">Category</label>
-          <input id="category" name="category" placeholder="GameRun (glitchless full-game)" />
-        </div>
-        <div class="field">
-          <label for="time">Verified Time (HH:MM:SS)</label>
-          <input id="time" name="verified_time" inputmode="numeric" pattern="^\d{1,2}:\d{2}:\d{2}$" placeholder="01:34:12" required />
-        </div>
-      </div>
+    <div class="row">
+      <label for="runtime">Run Time (HH:MM:SS)</label>
+      <input id="runtime" name="runtime" placeholder="00:43:35" pattern="^\\d{1,2}:\\d{2}:\\d{2}$" required />
+      <div class="hint">Examples: 0:43:35 or 00:43:35</div>
+    </div>
 
-      <div class="row">
-        <div class="field">
-          <label for="video">Video URL</label>
-          <input id="video" name="video_url" type="url" placeholder="https://…" required />
-        </div>
-        <div class="field">
-          <label for="proof">Additional Proof (optional)</label>
-          <input id="proof" name="additional_proof" type="url" placeholder="Splits, secondary VOD, etc." />
-        </div>
-      </div>
+    <div class="row">
+      <label for="video">Video URL</label>
+      <input id="video" name="video" type="url" placeholder="https://youtube.com/..." required />
+    </div>
 
-      <div class="field">
-        <label for="notes">Notes to Verifier (optional)</label>
-        <textarea id="notes" name="notes"></textarea>
-      </div>
+    <div class="row">
+      <label for="player">Player / Channel</label>
+      <input id="player" name="player" placeholder="NO CON7ROLL" required />
+    </div>
 
-      <div class="actions">
-        <button type="submit">Submit Run</button>
-        <button type="reset">Reset</button>
-      </div>
-    </form>
-  </div>
+    <div class="row">
+      <label for="date">Run Date</label>
+      <input id="date" name="date" type="date" required />
+    </div>
+
+    <div class="row">
+      <label for="notes">Notes (optional)</label>
+      <textarea id="notes" name="notes" rows="4" placeholder="Route notes, difficulty, special conditions..."></textarea>
+    </div>
+
+    <div class="row">
+      <label><input type="checkbox" name="rules_ack" required /> I followed GameRun rules (glitchless, whole-game, no load-time removal).</label>
+    </div>
+
+    <div class="actions">
+      <button type="submit">Submit Run</button>
+      <a href="/" class="hint">Back to Home</a>
+    </div>
+  </form>
+</div>
 </body>
 </html>

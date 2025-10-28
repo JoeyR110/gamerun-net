@@ -1,14 +1,12 @@
 [
   {
-    "game": "Outlast",
-    "category": "Glitchless",
-    "runner": "NoControl7ROLL",
-    "platform": "Xbox Series X",
-    "time_display": "1:01:51.000",
-    "time_seconds": 3711,
-    "date": "2025-09-20",
-    "video_url": "https://www.youtube.com/watch?v=example",
-    "verified_by": "Joey",
-    "verified_at": "2025-10-05"
+    "game": "Grayhill Incident",
+    "category": "Any% (Glitchless)",
+    "runtime": "00:43:35",
+    "player": "NO CON7ROLL",
+    "platform": "Xbox Series X|S",
+    "date": "2025-10-26",
+    "video": "https://www.youtube.com/your-run-url",
+    "notes": "Whole-game timer; credits reached; no skips."
   }
 ]
