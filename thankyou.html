@@ -3,31 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Thanks! Your GameRun Was Submitted</title>
-  <meta http-equiv="refresh" content="3; url=/" />
+  <title>Thank You</title>
   <style>
-    :root { color-scheme: dark; font-family: system-ui, Arial, sans-serif; }
-    body { margin: 0; min-height: 100dvh; display: grid; place-items: center; background:#111; color:#eee; }
-    .card { background:#181818; border:1px solid #333; border-radius:14px; padding:24px 28px; max-width:720px; text-align:center; }
-    h1 { margin: 0 0 .5rem; }
-    p { margin:.25rem 0; color:#cfcfcf; }
-    .accent { color:#ff6400; font-weight:700; }
-    a.btn { display:inline-block; margin-top:1rem; padding:.7rem 1.1rem; border-radius:8px; background:#ff6400; color:#fff; text-decoration:none; font-weight:700; }
-    a.btn:hover { background:#ff751a; }
-    .small { margin-top:.5rem; color:#8a8a8a; font-size:.95rem; }
+    :root { font-family: system-ui, Arial, sans-serif; color-scheme: dark; }
+    body {
+      background: #0a0a0a;
+      color: #eee;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    h1 { color: #ff6400; margin-bottom: 0.5rem; }
+    p { color: #bbb; }
   </style>
+  <script>
+    setTimeout(() => { window.location.href = "/"; }, 3000);
+  </script>
 </head>
 <body>
-  <main class="card">
-    <h1>✅ Thanks! Submission received.</h1>
-    <p>Your GameRun has been sent to the leaderboard queue.</p>
-    <p class="small">You’ll be redirected to the <span class="accent">home page</span> in a few seconds.</p>
-    <a class="btn" href="/">Go now</a>
-  </main>
-
-  <script>
-    // JS fallback if meta refresh is blocked
-    setTimeout(() => { location.href = "/"; }, 3000);
-  </script>
+  <h1>Submission Received!</h1>
+  <p>Thanks for submitting your GameRun. Redirecting you to the leaderboard...</p>
 </body>
 </html>

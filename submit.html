@@ -12,63 +12,58 @@
     }
     body {
       margin: 2rem;
-      background: #111;
-      color: #eee;
+      background: #0a0a0a;
+      color: #eaeaea;
     }
     .wrap {
-      max-width: 820px;
+      max-width: 860px;
       margin: 0 auto;
     }
     h1 {
+      color: #ff6400;
+      margin-bottom: 0.25rem;
+    }
+    p {
+      color: #aaa;
       margin-bottom: 1rem;
     }
     form {
-      background: #181818;
+      background: #111;
       border: 1px solid #333;
       border-radius: 12px;
-      padding: 1.25rem;
-    }
-    .row {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      margin-bottom: 1rem;
+      padding: 1.5rem;
     }
     label {
+      display: block;
       font-weight: 600;
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.4rem;
+      color: #ddd;
     }
-    input,
-    select,
-    textarea {
+    input, select, textarea {
       width: 100%;
       padding: 0.6rem;
+      border: 1px solid #333;
       border-radius: 6px;
-      border: 1px solid #555;
-      background: #222;
-      color: #eee;
-      font-size: 1rem;
-    }
-    input:focus,
-    select:focus,
-    textarea:focus {
-      outline: 2px solid #ff6400;
-      border-color: #ff6400;
+      background: #1a1a1a;
+      color: #fff;
+      margin-bottom: 1rem;
     }
     button {
       background: #ff6400;
       color: #fff;
-      border: none;
-      padding: 0.75rem 1.25rem;
+      font-size: 1rem;
       font-weight: bold;
-      border-radius: 6px;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
       cursor: pointer;
     }
     button:hover {
       background: #ff751a;
     }
     small {
-      color: #888;
+      color: #777;
+      font-size: 0.8rem;
     }
   </style>
 </head>
@@ -78,126 +73,71 @@
     <h1>Submit Your GameRun</h1>
     <p>Glitchless • Whole-game (start menu → end credits) • No load-time removal.</p>
 
-    <form name="gamerun" method="POST" data-netlify="true" action="/thankyou.html">
+    <form name="gamerun" method="POST" data-netlify="true" action="/thankyou.html" novalidate>
       <input type="hidden" name="form-name" value="gamerun" />
+      <input type="hidden" name="run_time_hhmmss" id="runTimeHidden" />
 
-      <div class="row">
-        <label for="title">Game Title</label>
-        <input id="title" name="title" type="text" required placeholder="Example: Grayhill Incident" />
-      </div>
+      <label for="title">Game Title</label>
+      <input id="title" name="title" type="text" required placeholder="Example: Grayhill Incident" />
 
-      <div class="row">
-        <label for="platform">Platform</label>
-        <select id="platform" name="platform" required>
-          <option value="">Select platform</option>
-          <option>Xbox Series X|S</option>
-          <option>PlayStation 5</option>
-          <option>PC (Steam)</option>
-          <option>PC (Epic)</option>
-          <option>Nintendo Switch</option>
-          <option>Other</option>
-        </select>
-      </div>
+      <label for="platform">Platform</label>
+      <select id="platform" name="platform" required>
+        <option value="">Select platform</option>
+        <option>Xbox Series X|S</option>
+        <option>PlayStation 5</option>
+        <option>PC (Steam)</option>
+        <option>PC (Epic)</option>
+      </select>
 
-      <div class="row">
-        <label for="category">Category</label>
-        <select id="category" name="category" required>
-          <option value="">Select category</option>
-          <option>Any% (Glitchless)</option>
-          <option>100% (Glitchless)</option>
-          <option>All Endings</option>
-        </select>
-      </div>
+      <label for="category">Category</label>
+      <select id="category" name="category" required>
+        <option value="">Select category</option>
+        <option>Any% (Glitchless)</option>
+        <option>100% Completion</option>
+        <option>No Damage</option>
+      </select>
 
-      <!-- Updated run time field -->
-      <div class="row">
-        <label for="runTime">Run Time (HH:MM:SS)</label>
-        <input
-          id="runTime"
-          name="runTime"
-          type="text"
-          inputmode="numeric"
-          placeholder="01:23:45 or 43:35"
-          required
-        />
-        <input type="hidden" name="run_time_hhmmss" id="runTimeHidden" />
-        <small>Examples: <code>43:35</code> or <code>01:23:45</code></small>
-      </div>
+      <label for="runtime">Run Time (HH:MM:SS)</label>
+      <input id="runtime" name="runtime" type="text" required placeholder="00:43:35 or 0:43:35" pattern="^([0-9]?[0-9]):([0-5][0-9]):([0-5][0-9])$" />
+      <small>Examples: 0:43:35 or 1:07:09</small>
 
-      <div class="row">
-        <label for="url">Video URL</label>
-        <input id="url" name="url" type="url" placeholder="https://youtube.com/..." required />
-      </div>
+      <label for="video">Video URL</label>
+      <input id="video" name="video" type="url" required placeholder="https://youtube.com/..." />
 
-      <div class="row">
-        <label for="player">Player / Channel</label>
-        <input id="player" name="player" type="text" placeholder="NO CON7ROLL" required />
-      </div>
+      <label for="player">Player / Channel</label>
+      <input id="player" name="player" type="text" required placeholder="NO CON7ROLL" />
 
-      <div class="row">
-        <label for="date">Run Date</label>
-        <input id="date" name="date" type="date" required />
-      </div>
+      <label for="date">Run Date</label>
+      <input id="date" name="date" type="date" required />
 
-      <div class="row">
-        <label for="notes">Notes (optional)</label>
-        <textarea id="notes" name="notes" rows="3" placeholder="Optional notes about this run..."></textarea>
-      </div>
+      <label for="notes">Notes (optional)</label>
+      <textarea id="notes" name="notes" rows="3" placeholder="Any notes or version info..."></textarea>
 
-      <div class="row">
+      <div>
         <label>
-          <input type="checkbox" name="rules" required />
+          <input type="checkbox" required />
           I followed GameRun rules (glitchless, whole-game, no load-time removal).
         </label>
       </div>
 
-      <div class="row">
-        <button type="submit">Submit Your GameRun</button>
-      </div>
+      <button type="submit">Submit GameRun</button>
     </form>
   </div>
 
   <script>
-    (function () {
-      const rt = document.getElementById('runTime');
-      const hidden = document.getElementById('runTimeHidden');
+    const runtimeInput = document.getElementById("runtime");
+    const hiddenTime = document.getElementById("runTimeHidden");
 
-      function normalizeTime(val) {
-        if (!val) return '';
-        let parts = val.split(':').map(x => x.trim());
-        if (parts.length === 2) parts.unshift('0');
-        let [h, m, s] = parts.map(p => parseInt(p || '0', 10));
-        if (isNaN(h)) h = 0;
-        if (isNaN(m)) m = 0;
-        if (isNaN(s)) s = 0;
-        h = Math.max(0, Math.min(99, h));
-        m = Math.max(0, Math.min(59, m));
-        s = Math.max(0, Math.min(59, s));
-        return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    runtimeInput.addEventListener("input", () => {
+      const value = runtimeInput.value.trim();
+      const match = value.match(/^(\d?\d):([0-5]\d):([0-5]\d)$/);
+      if (match) {
+        hiddenTime.value = match[0];
+        runtimeInput.setCustomValidity("");
+      } else {
+        runtimeInput.setCustomValidity("Please enter a valid time in HH:MM:SS format.");
       }
-
-      function validateTime(val) {
-        return /^(\d{1,2}:)?[0-5]?\d:[0-5]\d$/.test(val.trim());
-      }
-
-      rt.addEventListener('input', () => {
-        const val = rt.value;
-        rt.setCustomValidity(validateTime(val) ? '' : 'Use HH:MM:SS or MM:SS (e.g., 1:23:45 or 43:35)');
-        hidden.value = normalizeTime(val);
-      });
-
-      if (rt.form) {
-        rt.form.addEventListener('submit', e => {
-          const val = rt.value.trim();
-          if (!validateTime(val)) {
-            e.preventDefault();
-            alert('Invalid time format. Please use HH:MM:SS or MM:SS.');
-          } else {
-            hidden.value = normalizeTime(val);
-          }
-        });
-      }
-    })();
+    });
   </script>
 </body>
 </html>
