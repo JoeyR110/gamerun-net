@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -6,102 +7,128 @@
   <title>Submit Your GameRun</title>
   <link rel="stylesheet" href="/assets/styles.css" />
   <style>
-    :root { font-family: system-ui, Arial, sans-serif; color-scheme: light dark; }
-    body { margin: 2rem; }
-    .wrap { max-width: 920px; margin: 0 auto; }
-    form { background: var(--card, #111); border:1px solid #333; border-radius:12px; padding:1.25rem; }
-    .row { display:grid; grid-template-columns:1fr; gap:.75rem; margin-bottom:1rem; }
-    label { font-weight:600; font-size:.95rem; }
+    :root { font-family: system-ui, Arial, sans-serif; color-scheme: dark; }
+    body { margin: 2rem; background:#111; color:#eee; }
+    .wrap { max-width: 820px; margin: 0 auto; }
+    h1 { margin-bottom: 1rem; }
+    form { background:#181818; border:1px solid #333; border-radius:12px; padding:1.25rem; }
+    .row { display:flex; flex-direction:column; gap:.5rem; margin-bottom:1rem; }
+    label { font-weight:600; }
     input, select, textarea {
-      width:100%; padding:.75rem; border-radius:10px; border:1px solid #2c2c2c; background:#0b0b0b; color:#eaeaea;
+      width:100%; padding:.6rem; border-radius:6px; border:1px solid #555; background:#222; color:#eee; font-size:1rem;
     }
-    .hint { color:#9a9a9a; font-size:.85rem; }
-    .actions { display:flex; gap:.75rem; align-items:center; }
-    button { padding:.8rem 1rem; border-radius:10px; border:1px solid #2b2b2b; background:#1a1a1a; color:#fff; cursor:pointer; }
-    button:hover { background:#232323; }
-    .note { color:#9a9a9a; margin-bottom:1rem; }
-    .visually-hidden { position:absolute; left:-9999px; }
+    input:focus, select:focus, textarea:focus { outline:2px solid #ff6400; border-color:#ff6400; }
+    button { background:#ff6400; color:#fff; border:none; padding:.75rem 1.25rem; font-weight:700; border-radius:6px; cursor:pointer; }
+    button:hover { background:#ff751a; }
+    small { color:#888; }
   </style>
 </head>
 <body>
-<div class="wrap">
-  <h1>Submit Your GameRun</h1>
-  <p class="note">Glitchless • Whole-game (start menu → end credits) • No load-time removal.</p>
+  <div class="wrap">
+    <h1>Submit Your GameRun</h1>
+    <p>Glitchless • Whole-game (start menu → end credits) • No load-time removal.</p>
 
-  <!-- Netlify Forms -->
-  <form name="gamerun-submission" method="POST" data-netlify="true" netlify-honeypot="honeypot" action="/thankyou.html">
-    <input type="hidden" name="form-name" value="gamerun-submission" />
-    <p class="visually-hidden">
-      <label>Don’t fill this out: <input name="honeypot" /></label>
-    </p>
+    <form name="gamerun" method="POST" data-netlify="true" action="/thankyou.html">
+      <input type="hidden" name="form-name" value="gamerun" />
 
-    <div class="row">
-      <label for="game">Game Title</label>
-      <input id="game" name="game" placeholder="Grayhill Incident" required />
-    </div>
+      <div class="row">
+        <label for="title">Game Title</label>
+        <input id="title" name="title" type="text" required placeholder="Example: Grayhill Incident" />
+      </div>
 
-    <div class="row">
-      <label for="platform">Platform</label>
-      <select id="platform" name="platform" required>
-        <option value="" disabled selected>Select platform</option>
-        <option>Xbox Series X|S</option>
-        <option>Xbox One</option>
-        <option>PlayStation 5</option>
-        <option>PlayStation 4</option>
-        <option>PC</option>
-        <option>Nintendo Switch</option>
-        <option>Other</option>
-      </select>
-    </div>
+      <div class="row">
+        <label for="platform">Platform</label>
+        <select id="platform" name="platform" required>
+          <option value="">Select platform</option>
+          <option>Xbox Series X|S</option>
+          <option>PlayStation 5</option>
+          <option>PC (Steam)</option>
+          <option>PC (Epic)</option>
+          <option>Nintendo Switch</option>
+          <option>Other</option>
+        </select>
+      </div>
 
-    <div class="row">
-      <label for="category">Category</label>
-      <select id="category" name="category" required>
-        <option value="" disabled selected>Select category</option>
-        <option>Any% (Glitchless)</option>
-        <option>100% (Glitchless)</option>
-        <option>No Major Skips</option>
-        <option>New Game (Glitchless)</option>
-        <option>New Game+ (Glitchless)</option>
-      </select>
-      <div class="hint">GameRun rules: whole-game, no exploits, no load-time removal.</div>
-    </div>
+      <div class="row">
+        <label for="category">Category</label>
+        <select id="category" name="category" required>
+          <option value="">Select category</option>
+          <option>Any% (Glitchless)</option>
+          <option>100% (Glitchless)</option>
+          <option>All Endings</option>
+        </select>
+      </div>
 
-    <div class="row">
-      <label for="runtime">Run Time (HH:MM:SS)</label>
-      <input id="runtime" name="runtime" placeholder="00:43:35" pattern="^\\d{1,2}:\\d{2}:\\d{2}$" required />
-      <div class="hint">Examples: 0:43:35 or 00:43:35</div>
-    </div>
+      <div class="row">
+        <label for="runTime">Run Time (HH:MM:SS)</label>
+        <input
+          id="runTime"
+          name="runTime"
+          type="text"
+          inputmode="numeric"
+          placeholder="01:23:45"
+          pattern="^(?:\\d{1,2}:)?[0-5]?\\d:[0-5]\\d$"
+          title="Use HH:MM:SS or MM:SS (e.g., 1:23:45 or 43:35)"
+          required
+        />
+        <!-- normalized HH:MM:SS for Netlify -->
+        <input type="hidden" name="run_time_hhmmss" id="runTimeHidden" />
+        <small>Examples: <code>43:35</code> or <code>01:23:45</code></small>
+      </div>
 
-    <div class="row">
-      <label for="video">Video URL</label>
-      <input id="video" name="video" type="url" placeholder="https://youtube.com/..." required />
-    </div>
+      <div class="row">
+        <label for="url">Video URL</label>
+        <input id="url" name="url" type="url" placeholder="https://youtube.com/..." required />
+      </div>
 
-    <div class="row">
-      <label for="player">Player / Channel</label>
-      <input id="player" name="player" placeholder="NO CON7ROLL" required />
-    </div>
+      <div class="row">
+        <label for="player">Player / Channel</label>
+        <input id="player" name="player" type="text" placeholder="NO CON7ROLL" required />
+      </div>
 
-    <div class="row">
-      <label for="date">Run Date</label>
-      <input id="date" name="date" type="date" required />
-    </div>
+      <div class="row">
+        <label for="date">Run Date</label>
+        <input id="date" name="date" type="date" required />
+      </div>
 
-    <div class="row">
-      <label for="notes">Notes (optional)</label>
-      <textarea id="notes" name="notes" rows="4" placeholder="Route notes, difficulty, special conditions..."></textarea>
-    </div>
+      <div class="row">
+        <label for="notes">Notes (optional)</label>
+        <textarea id="notes" name="notes" rows="3" placeholder="Optional notes about this run..."></textarea>
+      </div>
 
-    <div class="row">
-      <label><input type="checkbox" name="rules_ack" required /> I followed GameRun rules (glitchless, whole-game, no load-time removal).</label>
-    </div>
+      <div class="row">
+        <label>
+          <input type="checkbox" name="rules" required />
+          I followed GameRun rules (glitchless, whole-game, no load-time removal).
+        </label>
+      </div>
 
-    <div class="actions">
-      <button type="submit">Submit Run</button>
-      <a href="/" class="hint">Back to Home</a>
-    </div>
-  </form>
-</div>
+      <div class="row">
+        <button type="submit">Submit Your GameRun</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    (function () {
+      const rt = document.getElementById('runTime');
+      const hidden = document.getElementById('runTimeHidden');
+
+      function normalize(val) {
+        if (!val) return '';
+        const parts = val.trim().split(':').map(s => s.trim());
+        if (parts.length === 2) parts.unshift('0'); // mm:ss -> 0:mm:ss
+        let [h, m, s] = parts.map(p => p.replace(/\\D/g, ''));
+        h = String(parseInt(h || '0', 10) || 0);
+        m = String(Math.min(59, parseInt(m || '0', 10))).padStart(2, '0');
+        s = String(Math.min(59, parseInt(s || '0', 10))).padStart(2, '0');
+        return `${h.padStart(2,'0')}:${m}:${s}`;
+      }
+
+      const setHidden = () => hidden.value = normalize(rt.value);
+      rt.addEventListener('input', setHidden);
+      if (rt.form) rt.form.addEventListener('submit', setHidden);
+    })();
+  </script>
 </body>
 </html>
